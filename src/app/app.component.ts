@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DataServiceService } from './service/data-service.service';
+import { Movie } from 'src/app/service/interface'
+
 
 @Component({
   selector: 'app-root',
@@ -16,4 +20,27 @@ export class AppComponent {
     'The selected titles should be removable.',
     'This mimics a form element in our application where users assign title metadata to assets, so if you would like to build something that replicates a form submission, feel free to come up with your own solution to how it "saves" the data.'
   ];
+  subscriptions$: Subscription[] = [];
+
+  constructor(private api: DataServiceService) { }
+
+  ngOnInit(): void {
+    // fetch list of movies from 'backend'
+    this.api.fetchTitles();
+  }
+
+  onSubmit(): Movie[] {
+    let result: Movie[] = [];
+    this.subscriptions$.push(
+      this.api.selected$.subscribe({
+        next: (list: Movie[]) => result = list,
+        error: (err: Error) => console.error(err)
+      })
+    );
+    console.log(result);
+    this.api.selected$.next([]);
+    console.log(result);
+    return result;
+  }
+
 }

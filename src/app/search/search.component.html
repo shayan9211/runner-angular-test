@@ -1,0 +1,40 @@
+
+<form class="search-form">
+
+    <mat-form-field
+        appearance="fill">
+
+        <mat-label
+            id="label-searchField">
+            Filter by Name
+        </mat-label>
+
+        <input
+            matInput
+            #inputField
+            type="text"
+            [formControl]="searchField"
+            (keyup)="debounceSearch()"
+            [matAutocomplete]="auto">
+
+        <mat-autocomplete #auto="matAutocomplete">
+
+            <ng-container *ngIf="filteredMovies.length && inputField.value.length > 2">
+                <mat-option
+                    *ngFor="let movie of filteredMovies"
+                    [value]="movie"
+                    (click)="select(movie)">
+                    {{movie.full_name}}
+                </mat-option>
+            </ng-container>
+
+        </mat-autocomplete>
+
+    </mat-form-field>
+
+</form>
+
+<!--
+<mat-option *ngFor="let movie of filteredMovies" [value]="movie">
+    {{movie.full_name}}
+</mat-option> -->

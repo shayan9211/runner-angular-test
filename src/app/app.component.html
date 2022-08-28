@@ -17,3 +17,14 @@
     <li *ngFor="let step of requirements">{{step}}</li>
   </ul>
 </div>
+
+<div class="content">
+  <app-search></app-search>
+  <app-list></app-list>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()">
+      Submit Selection
+  </button>
+</div>

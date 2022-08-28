@@ -1,0 +1,22 @@
+<mat-chip-list
+    #chipList
+    aria-label="Movie selection"
+    *ngIf="selected && selected.length" >
+
+    <mat-chip
+        *ngFor="let movie of selected"
+        (removed)="removeMovie(movie)">
+        {{movie.full_name}}
+
+        <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+        </button>
+
+    </mat-chip>
+
+</mat-chip-list>
+
+<ng-container
+    *ngIf="!selected || !selected.length">
+    None selected
+</ng-container>
